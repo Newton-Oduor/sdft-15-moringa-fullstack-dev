@@ -48,14 +48,17 @@ export function MentorDashboard() {
   }, [])
 
   /* Derived values (inside component) */
-  const topFive = [...mentorsData]
-    .sort((a, b) => b.students - a.students)
+  const topFive = mentorsData
+    .map(mentor => ({
+      ...mentor,
+      studentsCount: students.filter(
+        s => cohorts.find(c => c.id === s.cohort_id)?.mentor_id === mentor.id
+      ).length
+    }))
+    .sort((a, b) => b.studentsCount - a.studentsCount)
     .slice(0, 5)
 
-  const totalStudents = mentorsData.reduce(
-    (sum, m) => sum + m.students,
-    0
-  )
+  const totalStudents = students.length
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
