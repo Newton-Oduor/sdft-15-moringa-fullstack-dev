@@ -3,35 +3,44 @@
 import { TopMentorCard } from "./top-mentor-card"
 import { MentorsList } from "./mentors-list"
 import { Stats } from "./stats"
+import { useState, useEffect } from "react"
 
 // Sample data for demonstration
-const mentorsData = [
-  {
-    id: 1,
-    name: "Sarah Kipchoge",
-    students: 487,
-    specialty: "Full Stack Development",
-    image: "/professional-woman-diverse.png",
-  },
-  { id: 2, name: "James Omondi", students: 456, specialty: "React & Frontend", image: "/professional-man.jpg" },
-  { id: 3, name: "Amara Okoro", students: 423, specialty: "Data Science", image: "/professional-woman-diverse.png" },
-  { id: 4, name: "David Kiplagat", students: 398, specialty: "DevOps & Cloud", image: "/professional-man.jpg" },
-  { id: 5, name: "Nina Mwendwa", students: 376, specialty: "UX/UI Design", image: "/professional-woman-diverse.png" },
-  {
-    id: 6,
-    name: "Marcus Wanjiru",
-    students: 342,
-    specialty: "Backend Development",
-    image: "/professional-man.jpg",
-  },
-  { id: 7, name: "Elena Mussa", students: 298, specialty: "Product Management", image: "/professional-woman-diverse.png" },
-  { id: 8, name: "Ahmed Hassan", students: 265, specialty: "Mobile Development", image: "/professional-man.jpg" },
-]
+// const mentorsData = [
+//   {
+//     id: 1,
+//     name: "Sarah Kipchoge",
+//     students: 487,
+//     specialty: "Full Stack Development",
+//     image: "/professional-woman-diverse.png",
+//   },
+//   { id: 2, name: "James Omondi", students: 456, specialty: "React & Frontend", image: "/professional-man.jpg" },
+//   { id: 3, name: "Amara Okoro", students: 423, specialty: "Data Science", image: "/professional-woman-diverse.png" },
+//   { id: 4, name: "David Kiplagat", students: 398, specialty: "DevOps & Cloud", image: "/professional-man.jpg" },
+//   { id: 5, name: "Nina Mwendwa", students: 376, specialty: "UX/UI Design", image: "/professional-woman-diverse.png" },
+//   {
+//     id: 6,
+//     name: "Marcus Wanjiru",
+//     students: 342,
+//     specialty: "Backend Development",
+//     image: "/professional-man.jpg",
+//   },
+//   { id: 7, name: "Elena Mussa", students: 298, specialty: "Product Management", image: "/professional-woman-diverse.png" },
+//   { id: 8, name: "Ahmed Hassan", students: 265, specialty: "Mobile Development", image: "/professional-man.jpg" },
+// ]
+
+const mentorsData:any = useState([])
 
 const topFive = mentorsData.slice(0, 5)
 const totalStudents = mentorsData.reduce((sum, m) => sum + m.students, 0)
 
 export function MentorDashboard() {
+  useEffect(function(){
+  fetch('http://localhost:5555/mentors')
+  .then(response => response.json())
+  .then(data => console.log(data))
+}, [])
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
       {/* Header */}
